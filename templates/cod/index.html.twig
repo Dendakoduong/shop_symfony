@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}COD Checkout Confirmation{% endblock %}
+
+{% block body %}
+<div class="container float-center">
+    <div class="text-center">
+        <img class="img-fluid rounded" src="{{ asset('assets/img/check-7058.svg') }}" alt="trade-in" height="100px"
+            width="100px">
+    </div>
+    <h1>Order Success!</h1>
+    <p>Your order has been successfully submitted and is now awaiting confirmation. We will process your order as soon
+        as possible.<br>If you have any questions, please contact us <a href="/contact">here</a>.<br>Thank you for
+        shopping with us!</p>
+    <p>Ref: <b>{{order.reference}}</b></p>
+    <a href="{{ path('home') }}" class="btn btn-primary">Back to Homepage</a>
+</div>
+{% endblock %}

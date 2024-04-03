@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h3 class="text-center text-dark" style="font-weight: bold;">Featured Products</h3>
+<p class="text-center"> Products that you may like</p>
+<div class="row">
+    {% for product in top_products %}
+    <div class="col-md-4">
+        <div class="product-item">
+            <a href="{{ path('product_show', {slug: product.slug}) }}"><img class="img-fluid"
+                    src="/uploads/{{product.image}}" alt="{{product.name}}"></a>
+            <h5 class="mt-2">{{ product.name}}</h5>
+            <span class="product-subtitle text-center">{{product.subtitle}}</span>
+            <span class="product-price text-center">${{(product.price / 100 )|number_format(2,',', '.')}}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<!-- /.row -->
+
+
+<!-- start -->
+{# <h3 class="text-center text-dark" style="font-weight: bold;">New Arrivals</h3>#}
+{# <p class="text-center"> New products on Banazon</p>#}
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7">
+        <h2 class="featurette-heading">AirPods Pro <span class="text-muted">(2nd generation)</span></h2>
+        <p class="lead">Up to 2x more Active Noise Cancellation than the previous generation. Spatial Audio takes
+            immersion to a remarkably personal level. Touch control lets you adjust volume with a swipe. And a leap in
+            power delivers 6 hours of battery life from a single charge.</p>
+        <a class="btn btn-dark btn-oval" href="https://www.apple.com/airpods-pro/" role="button">Learn More</a>
+        <a class="btn btn-outline-dark btn-oval" href="products/airpods-pro-gen-2-magsafe-charge-usb-c" role="button">Buy</a>
+    </div>
+    <div class="col-md-5">
+        <img class="img-fluid rounded" src="{{ asset('assets/img/appro.jpg') }}" alt="airpods">
+    </div>
+</div>
+
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7 order-md-2 d-flex flex-column align-items-center">
+        <div>
+            <h2 class="featurette-heading text-center">Mac Studio<br> <small>and</small> <span class="text-muted">Studio
+                    Display</span></h2>
+            <p class="lead text-center">Mac Studio with M1 Max and the new M1 Ultra delivers unprecedented performance
+                and extensive connectivity in an incredibly compact design.<br>Studio Display features an expansive
+                27-inch 5K Retina screen, an advanced camera with Center Stage, and amazing high-fidelity audio</p>
+        </div>
+        <div>
+            <a class="btn btn-dark btn-oval"
+                href="https://www.apple.com/newsroom/2022/03/apple-unveils-all-new-mac-studio-and-studio-display/"
+                role="button">Learn More</a>
+            <a class="btn btn-outline-dark disabled btn-oval" role="button">Coming soon</a>
+        </div>
+    </div>
+    <div class="col-md-5 order-md-1">
+        <img class="img-fluid rounded" src="{{ asset('assets/img/mac.jpg') }}" alt="trade-in">
+    </div>
+</div>
+
+<hr class="featurette-divider">
+<div class="row featurette">
+    <div class="col-md-7">
+        <h2 class="featurette-heading">Apple Watch <span class="text-muted">Series 8</span></h2>
+        <p class="lead">A healthy leap ahead.</p>
+        <a class="btn btn-dark btn-oval" href="https://www.apple.com/apple-watch-series-8/" role="button">Learn More</a>
+        &nbsp;
+        <a class="btn btn-outline-dark btn-oval" href="products/apple-watch-series-8-gps-cellular-gold-41mm"
+            role="button">Buy</a>
+    </div>
+    <div class="col-md-5">
+        <img class="img-fluid rounded" src="{{ asset('assets/img/aw.jpg') }}" alt="apple-watch">
+    </div>
+</div>
+
+
+<!-- /END THE FEATURETTES -->
+{% endblock %}

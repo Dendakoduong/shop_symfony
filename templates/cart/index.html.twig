@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Banazon Cart{% endblock %}
+
+{% block body %}
+
+<!-- Flash messages -->
+{% for message in app.flashes('error') %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Your cart</h3>
+        {% if totalQuantity > 0 %}
+        <a href="{{ path('remove_cart') }}" title="Delete all" class="btn btn-outline-danger btn-sm float-right">
+            <i class="bi bi-x"></i>
+            Delete all items
+        </a>
+        {% endif %}
+
+        <p>Here are the items you added</p>
+
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th class="text-center" scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td class="align-middle">
+                        <img height="60px" src="/uploads/{{ item.product.image }}" alt="{{ item.product.name }}">
+                        {{item.product.name}}
+                    </td>
+                    <td class="align-middle">${{(item.product.price / 100)|number_format(2,',','.') }}</td>
+                    <td class="text-center align-middle">
+                        {% if item.quantity > 1 %}
+                        <a title="Remove one item" href="{{ path('decrease_item', {id:item.product.id}) }}"><i
+                                class="bi bi-dash"></i></a>
+                        {% endif %}
+                        {{ item.quantity }}
+                        {% if item.quantity < item.product.stock %} <a title="Add one item"
+                            href="{{ path('add_to_cart', {id:item.product.id}) }}"><i class="bi bi-plus"></i></a>
+                            {% endif %}
+                    </td>
+                    <td class="align-middle">${{ (item.quantity * (item.product.price / 100))|number_format(2,',','.')
+                        }}</td>
+                    <td class="align-middle"><a title="Delete this item"
+                            href="{{ path('remove_cart_item', {id: item.product.id}) }}" class="text-danger" href=""><i
+                                class="bi bi-trash"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <th>Total</th>
+                <td></td>
+                <td class="text-center"> <small>x</small> {{ totalQuantity }}</td>
+                <th>${{ (totalPrice / 100)|number_format(2,',','.') }}</th>
+            </tfoot>
+        </table>
+        <a class="mb-3 d-block" href="{{ path('product') }}">Continue shopping</a>
+        {% if totalQuantity > 0 %}
+        <a href="{{ path('order')}}" title="Continue to order" class="btn btn-success btn-block">Order</a>
+        {% else %}
+        Oops! There's nothing here. Click <a href="{{ path('product') }}">here</a> to have a glance at our products.
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <!-- Styling for the image ad -->
+        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+
+            <!-- Replace "path_to_your_image_ad.jpg" with the actual path to your image ad -->
+            <img src="{{ asset('assets/img/cartbanner.png') }}" alt="Advertisement"
+                style="max-width: 100%; max-height: 100%;">
+
+        </div>
+    </div>
+</div>
+<!-- JavaScript to auto-dismiss flash messages -->
+<script>
+    // Wait for the document to be fully loaded
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all flash message alert divs
+        const alertDivs = document.querySelectorAll('.alert');
+
+        // Loop through each alert div
+        alertDivs.forEach(function (alertDiv) {
+            // Hide the alert after 3 seconds with fade out animation
+            setTimeout(function () {
+                alertDiv.classList.add('fade');
+                alertDiv.style.opacity = '0';
+                setTimeout(function () {
+                    alertDiv.style.display = 'none';
+                }, 1000); // 1000 milliseconds = 1 second (fade duration)
+            }, 3000); // 3000 milliseconds = 3 seconds (delay before fade)
+        });
+    });
+</script>
+{% endblock %}

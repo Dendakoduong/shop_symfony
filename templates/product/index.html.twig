@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-3">
+        <h3 class="text-center">Filters</h3>
+        {#{{ form(form) }}
+        <label id="priceRangeLabel" for="priceRangeSlider"></label>#}
+        {{ form_start(form) }}
+        <div class="form-group">
+            <h6>Search</h6>
+            {{ form_widget(form.string) }}
+        </div>
+        <div class="form-group">
+            <h6>Categories</h6>
+            {{ form_widget(form.categories) }}
+        </div>
+        <div class="form-group">
+            <h6>Price Range</h6>
+            {{ form_widget(form.priceRange) }}
+            <label id="priceRangeLabel" for="priceRangeSlider"></label>
+        </div>
+        {{ form_widget(form.submit) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-9">
+        <h3 class="text-center">All products</h3>
+        <hr>
+        <div class="row">
+            {% if products|length > 0 %}
+            {% for product in products %}
+            <div class="col-md-4">
+                <div class="product-item">
+                    <a href="{{ path('product_show', {slug: product.slug}) }}"><img class="img-fluid"
+                            src="/uploads/{{ product.image }}" alt="{{ product.name }}"></a>
+                    <h5 class="mt-2">{{ product.name }}</h5>
+                    <span class="product-subtitle text-center">{{ product.subtitle }}</span>
+                    <span class="product-price text-center">${{ (product.price / 100)|number_format(2, ',', '.')
+                        }}</span>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-md-12">
+                <h4 class="text-center">No product available</h4>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function updatePriceLabel(value) {
+        document.getElementById('priceRangeLabel').textContent = 'Selected price: $' + value;
+    }
+</script>
+
+{% endblock %}

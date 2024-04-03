@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-5 image-container">
+        <a href="/uploads/{{ product.image }}" class="MagicZoomPlus">
+            <img class="img-fluid" src="/uploads/{{ product.image }}" alt="{{ product.name }}">
+        </a>
+    </div>
+    <div class="col-md-7 my-auto">
+        <h3>{#<i class='fab fa-apple' style='font-size:36px'></i>#} {{ product.name }}</h3>
+        <p>{{ product.subtitle }}</p>
+        <h6>Category: {{ product.category }}</h6>
+        <hr>
+        <span class="product-price">Price: ${{ (product.price / 100)|number_format(2, ',', '.') }}</span>
+        <hr>
+        {% if product.stock > 0 %}
+        <span class="font-weight-bold">In stock:</span> <span class="text-success">{{ product.stock }}</span>
+        {% else %}
+        <span class="text-danger font-weight-bold">Out of Stock</span>
+        {% endif %}
+        <hr>
+        <h6>Description</h6>
+        <p>{{ product.description }}</p>
+        <div class="d-flex justify-content-start align-items-center mb-3">
+            {% if product.stock > 0 %}
+            <a href="{{ path('add_to_cart', {id: product.id}) }}" class="btn btn-success mr-3">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+            </a>
+            {% else %}
+            <button class="btn btn-outline-secondary mr-3" disabled>
+                <i class="fas fa-cart-plus"></i> Unavailable
+            </button>
+            {% endif %}
+            {# <a href="{{ path('order') }}" class="btn btn-warning">#}
+                {# Buy Now#}
+                {# </a>#}
+        </div>
+    </div>
+</div>
+<hr>
+<!-- Product suggest -->
+{% if suggestedProducts|length > 0 %}
+<h4 class="mb-3">Suggested Products for You</h4>
+<div class="row">
+    {% for suggestedProduct in suggestedProducts %}
+    <div class="col-md-4">
+        <div class="card">
+            <img class="card-img-top" src="/uploads/{{ suggestedProduct.image }}" alt="{{ suggestedProduct.name }}">
+            <div class="card-body">
+                <h5 class="card-title text-center">{{ suggestedProduct.name }}</h5>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ path('product_show', {slug: suggestedProduct.slug}) }}" class="btn btn-primary">View
+                        Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-3">
+    <div>
+        {% if currentPage > 1 %}
+        <a href="{{ path('product_show', {slug: product.slug, page: currentPage - 1}) }}"
+            class="btn btn-outline-primary mr-3">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        {% endif %}
+
+        {% if currentPage < totalPages %} <a
+            href="{{ path('product_show', {slug: product.slug, page: currentPage + 1}) }}"
+            class="btn btn-outline-primary">
+            <i class="fas fa-arrow-right"></i>
+            </a>
+            {% endif %}
+    </div>
+</div>
+<!-- End Pagination -->
+<!-- end -->
+<div class="why-buy-section">
+    <hr>
+    <h4>Why choose Banazon?</h4>
+    <div class="row">
+        <div class="col-md-3">
+            <i class="fas fa-check-circle"></i>
+            <p>Authentic product</p>
+        </div>
+        <div class="col-md-3">
+            <i class="fas fa-plane-departure"></i>
+            <p>International shipping</p>
+        </div>
+        <div class="col-md-3">
+            <i class="fas fa-shipping-fast"></i>
+            <p>Fast delivery</p>
+        </div>
+        <div class="col-md-3">
+            <i class="fas fa-headset"></i>
+            <p>Excellent customer support</p>
+        </div>
+        <div class="col-md-3">
+            <i class="fas fa-hand-holding-usd"></i>
+            <p>Secure payment</p>
+        </div>
+        <div class="col-md-3">
+            <i class="fas fa-undo"></i>
+            <p>14 days return policy*</p>
+        </div>
+    </div>
+    <small>* For more information, please contact the customer support.</small>
+</div>
+<script>
+    $(document).ready(function () {
+        MagicZoomPlus.start();
+    });
+</script>
+{% endblock %}

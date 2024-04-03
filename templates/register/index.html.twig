@@ -1,0 +1,44 @@
+{#
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center">Create an account</h2>
+                <p class="font-weight-bold text-center">Sign up for Banazon account</p>
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+#}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/347/682070cc8606bd4d9952d2b309070e54_res.jpeg"
+                         alt="Logo" class="mb-3" height="40px" width="40px">
+                </div>
+                <h2 class="text-center">Create account</h2>
+                {{ form_start(form) }}
+                {{ form_row(form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Lan, Anh, Hoa, etc.'}}) }}
+                {{ form_row(form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Nguyen, Tran, Le, etc.'}}) }}
+                {{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder': 'someone@example.com'}}) }}
+                {{ form_row(form.password.first, {'attr': {'class': 'form-control', 'placeholder': 'Enter your password'}}) }}
+                {{ form_row(form.password.second, {'attr': {'class': 'form-control', 'placeholder': 'Confirm your password'}}) }}
+                <p>
+                    Already have an account? <a href="{{ path('app_login') }}">Sign in</a>
+                </p>
+                <div class="text-left"> <!-- Add the 'text-right' class to align the button to the right -->
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-warning'}}) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+

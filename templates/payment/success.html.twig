@@ -1,0 +1,43 @@
+{#
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commande - La Boot'Ique{% endblock %}
+
+{% block body %}
+<h2>Confirmation de votre commande</h2>
+<p>
+    Bonjour {{order.user.firstname}} {{order.user.lastname}}, <br>
+    Nous vous remercions de votre commande n° <b>{{order.reference}}</b>.<br>
+    Une confirmation vient de vous être envoyé par mail. <br>
+</p>
+<hr>
+<p>
+    Votre commande sera livrée par {{order.carrierName}} à l'adresse suivante: <br>
+    {{order.delivery|raw}}
+</p>
+<hr>
+<p>
+    Pour suive votre commande, rendez-vous dans votre <a href="{{ path('account_orders') }}">compte</a>.
+</p>
+{% endblock %}#}
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment Successful!{% endblock %}
+
+{% block body %}
+
+{{ parent() }}
+
+<div class="container float-center">
+    <div class="text-center">
+        <img class="img-fluid rounded" src="{{ asset('assets/img/check-7058.svg') }}" alt="trade-in" height="100px"
+            width="100px">
+    </div>
+    <h1>Payment Successful!</h1>
+    <p>Thanks for your order. We appreciate your business.<br>If you have any questions, please contact us <a
+            href="/contact">here</a>.</p>
+    <p>Ref: <b>{{order.reference}}</b></p>
+    <a href="{{ path('home') }}" class="btn btn-primary">Back to Homepage</a>
+</div>
+
+{% endblock %}

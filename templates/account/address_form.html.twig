@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Address{% endblock %}
+
+{% block body %}
+{% for flashMessage in app.flashes('warning') %}
+<div class="alert alert-warning" role="alert">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+<h2 class="mb-4">My Address</h2>
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-12">{{ form_row(form.name, {'label': 'Name'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.firstname, {'label': 'First Name'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.lastname, {'label': 'Last Name'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.address, {'label': 'Address'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.postal, {'label': 'Postal Code'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.city, {'label': 'City'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.country, {'label': 'Country'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.phone, {'label': 'Phone'}) }}</div>
+    <div class="col-md-6">{{ form_row(form.company, {'label': 'Company (Optional)'}) }}</div>
+    <div class="col-md-12">{{ form_row(form.submit, {'label': 'Submit'}) }}</div>
+</div>
+
+{{ form_end(form) }}
+<a title="Return to Your Account" href="{{ path('account') }}"><i class='fas fa-angle-left' style='font-size:15px'></i>
+    Return to my account</a>
+{% endblock %}

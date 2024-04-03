@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My orders{% endblock %}
+
+{% block body %}
+<h2>My orders</h2>
+{% if orders %}
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">State</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col">Date </th>
+            <th scope="col">Reference number </th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{
+                order.state == 1 ? 'Payment accepted' :
+                order.state == 2 ? 'In preparation':
+                order.state == 3 ? 'Shipped': 'Waiting to confirm'
+                }}</td>
+            <td>{{order.totalQuantity}}</td>
+            <td>${{((order.carrierPrice + order.total) / 100)|number_format(2,',','.') }}</td>
+            <td>{{order.createdAt|date('d/m/Y')}}</td>
+            <td><span class="badge badge-secondary">{{order.reference}}</span></td>
+            <td><a href="{{ path('account_order', {'reference' : order.reference}) }}"
+                    class="btn btn-outline-info btn-sm">See details</a>
+            </td><!--text-info-->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>You don't have any orders yet.</p>
+{% endif %}
+<a title="Back to my account" href="{{ path('account') }}" class="text-primary"><i class='fas fa-angle-left'
+        style='font-size:15px'></i> Return to My Account</a>
+{% endblock %}

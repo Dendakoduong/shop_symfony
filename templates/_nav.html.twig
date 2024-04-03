@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+    <a class="navbar-brand" href="{{ path('home') }}">
+        <img src="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/347/682070cc8606bd4d9952d2b309070e54_res.jpeg"
+            alt="Logo Banazon" width="30" height="30" class="d-inline-block align-top">
+        Banazon | <img src="{{ asset('assets/img/applepremiumlogo.jpg') }}" alt="Logo Banazon" width="30" height="30"
+            class="d-inline-block align-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('product') }}">Products</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('about') }}">About us</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('contact') }}">Contact us</a>
+            </li>
+            {# dropdown menu category tà đạo #}
+            {#<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Category
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item"
+                        href="{{ path('product', {'categories[]': 1, 'priceRange': 10, 'submit': ''}) }}">iPhone</a>
+                    <a class="dropdown-item"
+                        href="{{ path('product', {'categories[]': 2, 'priceRange': 10, 'submit': ''}) }}">iPad</a>
+                    <!-- Add more items as needed -->
+                </div>
+            </li>#}
+        </ul>
+        <div id="searchContainer" style="margin-left: 20px;  margin-right: 10px;">
+            <i id="searchIcon" class="fas fa-search" onclick="toggleSearchForm()" style="cursor: pointer;"></i>
+            <div id="searchForm" style="display: none; transition: all 0.5s ease;">
+                <form class="form-inline my-2 my-lg-0" action="{{ path('product') }}" method="get">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                        name="string">
+                    <input type="hidden" name="priceRange" value="10">
+                    <input type="hidden" name="submit" value="">
+                    <button class="btn btn-primary my-2 my-sm-0" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div style="margin-left: 10px;">
+                        <i id="closeIcon" class="fas fa-times" onclick="toggleSearchForm()"
+                            style="cursor: pointer;"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <ul class="navbar-nav">
+            {% if app.user %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> {{ app.user.firstname }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('account') }}"><i class="bi bi-person"></i> My Account</a>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right"></i> Sign
+                        out</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('register') }}">Sign up</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('app_login') }}">Sign in</a>
+            </li>
+            {% endif %}
+            <li class="nav-item active">
+                <a title="Cart" class="nav-link" href="{{ path('cart') }}"><i class="bi bi-cart2"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<script>
+    function toggleSearchForm() {
+        var form = document.getElementById('searchForm');
+        var icon = document.getElementById('searchIcon');
+        var closeIcon = document.getElementById('closeIcon');
+        if (form.style.display === "none") {
+            form.style.display = "block";
+            icon.style.display = "none";
+            closeIcon.style.display = "block";
+        } else {
+            form.style.display = "none";
+            icon.style.display = "block";
+            closeIcon.style.display = "none";
+        }
+    }
+</script>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Banazon is the shopping website made in Vietnam">
+    <meta name="author" content="Banazon Team">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>{% block title %}Banazon{% endblock %}</title>
+
+    <!-- add icon link -->
+    <link rel="icon"
+        href="https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/347/682070cc8606bd4d9952d2b309070e54_res.jpeg"
+        type="image/x-icon">
+
+    <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/carousel.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    {#
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://www.magictoolbox.com/magicthumb/magicthumb.css">
+</head>
+
+<body>
+    <header>
+        {% include "_nav.html.twig" %}
+    </header>
+
+    <main class="mb-5" role="main">
+        {% if carousel is defined %}
+        {% include "_carousel.html.twig" %}
+        {% else %}
+        {% set margin = 'mt-5' %}
+        {% endif %}
+        <div class="container {{margin ?? 0}}">
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+    <footer class="footer-custom">
+        {% include "_footer.html.twig" %}
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="{{asset('assets/js/bootstrap.bundle.js')}}"></script>
+    <script src="https://www.magictoolbox.com/magicthumb/magicthumb.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,305 @@
+{# templates/dashboard/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+{#<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{{ path('admin') }}" class="btn btn-primary mb-3">Back to Admin Panel</a>
+    </div>
+  </div>
+</div>#}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<h1>Dashboard</h1>
+<div class="row">
+  <div class="col-md-12">
+    <a href="{{ path('admin') }}" class="btn btn-primary mb-3">Back to Admin Panel</a>
+  </div>
+</div>
+<div class="row" style="margin-bottom: 20px;">
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Total Orders</h5>
+        <p class="card-text">{{ totalOrders }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Total Users</h5>
+        <p class="card-text">{{ totalUsers }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Total Money Received</h5>
+        <p class="card-text">${{ (totalMoneyReceived / 100)|number_format(2,',','.') }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Total Products</h5>
+        <p class="card-text">{{ totalProducts }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--pie chart-->
+<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+  <div style="flex: 1; padding-right: 10px; height: 300px;">
+    <canvas id="categoryChart" width="100%" height="100%"></canvas>
+  </div>
+</div>
+
+<script>
+  var productsByCategory = {{ productsByCategory | json_encode | raw }};
+  var labels = Object.keys(productsByCategory);
+  var data = Object.values(productsByCategory);
+
+  var ctx = document.getElementById('categoryChart').getContext('2d');
+  var categoryChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: [
+          // Add as many colors as you have categories
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 64, 0.2)' // Added color for the 7th category
+        ],
+        borderColor: [
+          // Add as many colors as you have categories
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 64, 1)' // Added color for the 7th category
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        position: 'right',
+      },
+      animation: {
+        animateScale: true,
+        animateRotate: true
+      }
+    }
+  });
+</script>
+
+<!--overall chart-->
+{#<canvas id="overallChart" width="100%" height="40"></canvas>
+<script>
+  var ctx = document.getElementById('overallChart').getContext('2d');
+  var comboChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: {{ dates| json_encode | raw }},
+  datasets: [{
+    label: 'Total Money Received Over Time',
+    data: {{ moneyReceived| json_encode | raw }},
+    type: 'line',
+    borderColor: 'rgba(75, 192, 192, 1)',
+    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    fill: false,
+    yAxisID: 'y1',
+      }, {
+    label: 'Orders Over Time',
+    data: {{ orders| json_encode | raw }},
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgba(255, 99, 132, 1)',
+    borderWidth: 1,
+    yAxisID: 'y2',
+      }]
+    },
+  options: {
+    scales: {
+      y1: {
+        type: 'linear',
+          position: 'left',
+            beginAtZero: true,
+              ticks: {
+          callback: function(value, index, values) {
+            return '$' + value;
+          }
+        }
+      },
+      y2: {
+        type: 'linear',
+          position: 'right',
+            beginAtZero: true,
+              ticks: {
+          stepSize: 1
+        },
+        grid: {
+          drawOnChartArea: false
+        }
+      }
+    }
+  }
+  });
+</script>#}
+
+<div style="display: flex; justify-content: space-between;">
+  <div style="flex: 1; padding-right: 10px;">
+    <canvas id="myChart" width="100%" height="60"></canvas>
+    <canvas id="ordersChart" width="100%" height="60"></canvas>
+  </div>
+  <div style="flex: 1; padding-left: 10px; max-width: 600px;">
+    <hr>
+    <h6>Top 5 Users with Most Orders</h6>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">User</th>
+          <th scope="col">Orders</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user, orders in userOrders|slice(0, 5) %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ user }}</td>
+          <td>{{ orders }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <hr>
+    <select id="productSelection">
+      <option value="mostSold">Top 5 Most Sold Products</option>
+      <option value="hardToSell">Top 5 Hardest to Sell Products</option>
+    </select>
+
+    <div id="mostSoldTable" style="display: block;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Sales</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% set productSales = productSales|sort((a, b) => b - a) %}
+          {% for product, sales in productSales|slice(0, 5) %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ product }}</td>
+            <td>{{ sales }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="hardToSellTable" style="display: none;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Sales</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product, sales in hardToSellProducts %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ product }}</td>
+            <td>{{ sales }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <script>
+      document.getElementById('productSelection').addEventListener('change', function () {
+        var mostSoldTable = document.getElementById('mostSoldTable');
+        var hardToSellTable = document.getElementById('hardToSellTable');
+        if (this.value === 'mostSold') {
+          mostSoldTable.style.display = 'block';
+          hardToSellTable.style.display = 'none';
+        } else {
+          mostSoldTable.style.display = 'none';
+          hardToSellTable.style.display = 'block';
+        }
+      });
+    </script>
+
+    <script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: {{ dates| json_encode | raw }},
+      datasets: [{
+        label: 'Total Money Received Over Time',
+        data: {{ moneyReceived| json_encode | raw }},
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+     }]
+   },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+              ticks: {
+              callback: function(value, index, values) {
+                return '$' + value;
+              }
+            }
+          }
+        }
+      }
+ });
+
+      ctx = document.getElementById('ordersChart').getContext('2d');
+      var ordersChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: {{ dates| json_encode | raw }},
+      datasets: [{
+        label: 'Orders Over Time',
+        data: {{ orders| json_encode | raw }},
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+    }]
+  },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+});
+    </script>
+
+    {% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My order{% endblock %}
+
+{% block body %}
+<style>
+    .form-container {
+        border-right: 1px solid #ccc;
+        padding-right: 20px;
+    }
+
+    .vertical-line {
+        border-right: 1px solid #ccc;
+        height: 100%;
+        margin-right: -1px;
+    }
+</style>
+
+<h2>Confirm order</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="d-md-flex">
+            <div class="form-container">
+                {% set formHtml %}
+                {{ form_start(form, {action:path('order_add')}) }}
+                {{ form_label(form.addresses, 'Choose your delivery address') }}
+                <a class="d-block mb-3" href="{{ path('account_address_new') }}">Add a new address</a>
+                {{ form_end(form) }}
+                {% endset %}
+                {{ formHtml|replace({'[br]' : '<br>'})|raw }}
+            </div>
+            <div class="vertical-line"></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <strong class="summary-label">Your order:</strong>
+        <div class="cart-summary">
+            {% for item in cart.products %}
+            <div class="row">
+                <div class="col-2 my-auto"><img height="50px" src="/uploads/{{ item.product.image }}"
+                        alt="{{ item.product.name }}"></div>
+                <div class="col-8 my-auto">{{ item.product.name }}</div>
+                <div class="col-2 my-auto">x{{ item.quantity }}</div>
+            </div>
+            {% endfor %}
+            <hr>
+            <div class="row">
+                <div class="col-9 font-weight-bold">Total</div>
+                <div class="col-3 font-weight-bold">${{ (totalPrice / 100)|number_format(2, ',', '.') }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

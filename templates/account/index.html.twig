@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Account{% endblock %}
+
+{% block body %}
+    <h2>Your account</h2>
+    Hello, {{ app.user.firstname }}. Have a nice day!
+    <hr>
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="list-group">
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('admin') }}" class="list-group-item list-group-item-action">
+                <i class="fas fa-user-cog"></i> Admin panel
+            </a>
+        {% endif %}
+        {% if is_granted('ROLE_MOD') %}
+            <a href="{{ path('mod') }}" class="list-group-item list-group-item-action">
+                <i class="fas fa-user-cog"></i> Mod panel
+            </a>
+        {% endif %}
+        <a href="{{ path('home') }}" class="list-group-item list-group-item-action">
+            <i class="fas fa-home"></i> Homepage
+        </a>
+        <a href="{{ path('account_orders') }}" class="list-group-item list-group-item-action">
+            <i class="fas fa-shopping-cart"></i> My orders
+        </a>
+        <a href="{{ path('account_address') }}" class="list-group-item list-group-item-action">
+            <i class="fas fa-address-card"></i> My address
+        </a>
+        <a href="{{ path('account_password') }}" class="list-group-item list-group-item-action">
+            <i class="fas fa-key"></i> Change password
+        </a>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Banazon Checkout {% endblock %}
+
+{% block body %}
+<h2>Checkout</h2>
+<div class="row">
+    <div class="col-md-5">
+        <strong>Shipping address</strong><br>
+        <p>{{ order.delivery|raw }}</p>
+
+        <strong>Carrier</strong>
+        <p>{{ order.carrierName }}</p>
+    </div>
+    <div class="col-md-7">
+        <strong class="summary-label">Order Summary</strong>
+        <div class="cart-summary">
+            {% for item in cart.products %}
+            <div class="row">
+                <div class="col-2 my-auto"><img height="50px" src="/uploads/{{ item.product.image }}"
+                        alt="{{ item.product.name }}"></div>
+                <div class="col-8 my-auto">{{ item.product.name }}</div>
+                <div class="col-2 my-auto">x{{ item.quantity }}</div>
+            </div>
+            {% endfor %}
+            <hr>
+            <div class="row">
+                <div class="col-9 font-weight-bold">Items</div>
+                <div class="col-3">${{ (totalPrice / 100)|number_format(2,',','.') }}</div>
+            </div>
+            <div class="row">
+                <div class="col-9 font-weight-bold">Shipping fee</div>
+                <div class="col-3">${{ (order.carrierPrice / 100)|number_format(2,',','.') }}</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-9 font-weight-bold text-danger">Order Total</div>
+                <div class="col-3 font-weight-bold text-danger">${{ ((totalPrice / 100) + order.carrierPrice /
+                    100)|number_format(2,',','.') }}</div>
+            </div>
+        </div>
+        <br>
+        <div class="payment-info">
+            <small>Banazon accepts all major credit cards</small>
+            <div class="card-logos">
+                <i class='fab fa-cc-visa' style='font-size:24px'></i>
+                <i class='fab fa-cc-mastercard' style='font-size:24px'></i>
+                <i class='fab fa-cc-amex' style='font-size:24px'></i>
+                <i class='fab fa-cc-jcb' style='font-size:24px'></i>
+                {# <i class='fab fa-cc-apple-pay' style='font-size:24px'></i>#}
+                {#<img src="amex_logo.png" alt="AMEX">#}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7 offset-md-5 mt-4">
+        <a href="{{ path('checkout', { reference: order.reference }) }}" class="btn btn-warning btn-block"><i
+                class="bi bi-credit-card-2-back"></i> Continue to Payment</a>
+    </div>
+    <div class="col-md-7 offset-md-5 d-flex align-items-center justify-content-center my-2">
+        <hr class="flex-grow-1">
+        <span class="mx-2">Or</span>
+        <hr class="flex-grow-1">
+    </div>
+    <div class="col-md-7 offset-md-5 mt-2">
+        <a href="{{ path('cod_checkout', { reference: order.reference }) }}" class="btn btn-success btn-block"><i
+                class="bi bi-cash"></i> COD</a>
+    </div>
+</div>
+{% endblock %}
