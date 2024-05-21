@@ -14,6 +14,7 @@ composer install
 Create the database with name `dbshop123` and run query in the file `dbshop123.sql`. You can modify the database name in `.env` file.
 
 Usage
+<br/>
 After installation, you can start the local development server by running:
 ```
 symfony server:start
