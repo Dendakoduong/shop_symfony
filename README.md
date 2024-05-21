@@ -72,20 +72,16 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ### Order Processing:
 - Create and manage orders.
-- Handle payment processing (Card/Cash on Payment).
+- Handle payment processing (Card/Cash on Delivery).
 
 ### Search and Filtering:
 - Implement product search functionality.
 - Filter products by category, price range, and other attributes.
 
-### Product Recommendations:
+### Others:
 - Suggest related or similar products to users.
-
-### Admin Dashboard:
-- Provide an admin interface for managing products, orders, and users.
-  
-### Moderator Dashboard:
-- Provide an moderator interface for managing products, orders, etc.
+- Users can zoom the product image by click on the image product.
+- Admin and Moderator dashboard.
 
 ## Screenshots
 ![image](https://github.com/Dendakoduong/shop_symfony/assets/106602391/76f9ecce-b4e1-4f65-a3ee-e2d42bb7c1aa)
