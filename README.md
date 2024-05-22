@@ -21,6 +21,13 @@ symfony server:start
 ```
 Navigate to http://localhost:8000 in your web browser to view the application.
 
+### Login credentials
+| Email           | Password    | Roles       |
+|-----------------|-------------|-------------|
+| admin@gmail.com | 1234567890  | Admin       |
+| mod@gmail.com   | 1234567890  | Moderator   |
+| user@gmail.com  | 1234567890  | User        |
+
 # Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
@@ -91,6 +98,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ![image](https://github.com/Dendakoduong/shop_symfony/assets/106602391/10a3c123-5cf3-46a7-8b97-403f137293db)
 ![image](https://github.com/Dendakoduong/shop_symfony/assets/106602391/5d880a89-b6ab-493d-9bf5-e9fef1ff2118)
 ![image](https://github.com/Dendakoduong/shop_symfony/assets/106602391/f16a891a-353d-403a-a4a0-63fe11ee4d00)
+
+
 
 
 
